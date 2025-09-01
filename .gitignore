@@ -1,0 +1,38 @@
+# Arquivos e pastas do ambiente local
+node_modules/
+dist/
+build/
+.env
+*.env
+*.log
+
+# Arquivos de cache e temporários
+.cache/
+*.cache
+*.tmp
+temp/
+
+# Arquivos de IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de dependências locais
+package-lock.json
+yarn.lock
+
+# Arquivos sensíveis do Firebase
+firebase.json
+.firestore.rules
+firestore.indexes.json
+storage.rules
+
+# Pastas de build do Netlify
+.netlify/
+_functions/
+functions/
