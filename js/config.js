@@ -19,4 +19,4 @@ const db = getFirestore(app);
 const storesRef = collection(db, 'mercerias'); // Alterado para a nova coleção
 
 // Não vamos mais exportar productsRef daqui, pois ela dependerá da mercearia selecionada
-export { db, storesRef };
+export { db, storesRef, app };

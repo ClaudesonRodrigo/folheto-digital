@@ -8,7 +8,12 @@
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-    <h1>Painel de Administração</h1>
+    <script type="module" src="js/authGuard.js"></script>
+
+    <div class="header-admin">
+        <h1>Painel de Administração</h1>
+        <button id="logoutButton">Sair</button>
+    </div>
 
     <div class="container">
         <h2>Gerenciar Mercearias</h2>
@@ -17,16 +22,16 @@
             <form id="storeForm">
                 <input type="hidden" id="storeId">
                 <input type="text" id="storeName" placeholder="Nome da Mercearia" required>
-                    <label for="storeLogoFile">Logo da Mercearia:</label>
-                    <input type="file" id="storeLogoFile" accept="image/*">
-                    <img id="logoPreview" src="" alt="Pré-visualização da logo" style="width: 150px; display: none; margin-top: 10px;">
-                    <input type="hidden" id="storeLogoUrl">
-                    <input type="text" id="storeCep" placeholder="CEP (apenas números)" maxlength="8">
-                    <input type="text" id="storeStreet" placeholder="Rua / Logradouro" required>
-                    <input type="text" id="storeNumber" placeholder="Número" required>
-                    <input type="text" id="storeNeighborhood" placeholder="Bairro" required>
-                    <input type="text" id="storeCity" placeholder="Cidade" required>
-                    <input type="text" id="storeState" placeholder="Estado (UF)" required>
+                <label for="storeLogoFile">Logo da Mercearia:</label>
+                <input type="file" id="storeLogoFile" accept="image/*">
+                <img id="logoPreview" src="" alt="Pré-visualização da logo" style="width: 150px; display: none; margin-top: 10px;">
+                <input type="hidden" id="storeLogoUrl">
+                <input type="text" id="storeCep" placeholder="CEP (apenas números)" maxlength="8">
+                <input type="text" id="storeStreet" placeholder="Rua / Logradouro" required>
+                <input type="text" id="storeNumber" placeholder="Número" required>
+                <input type="text" id="storeNeighborhood" placeholder="Bairro" required>
+                <input type="text" id="storeCity" placeholder="Cidade" required>
+                <input type="text" id="storeState" placeholder="Estado (UF)" required>
                 <div class="input-group">
                     <span>+55</span>
                     <input type="text" id="storeWhatsapp" placeholder="DDD + Número (ex: 11999999999)" required>

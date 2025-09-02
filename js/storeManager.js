@@ -1,5 +1,7 @@
 import { db, storesRef } from './config.js';
 import { getDocs, addDoc, updateDoc, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js';
+import { app } from './config.js'; // Precisamos importar o 'app'
 
 // --- CONFIGURAÇÃO DO CLOUDINARY (Duplicado para este módulo) ---
 const CLOUDINARY_CLOUD_NAME = "dhzzvc3vl";
@@ -10,6 +12,8 @@ const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}
 const storeForm = document.getElementById('storeForm');
 const storeTableBody = document.querySelector('#storeTable tbody');
 const productSection = document.getElementById('productsSection');
+const auth = getAuth(app);
+const logoutButton = document.getElementById('logoutButton');
 
 // --- Campos do Formulário ---
 const cepInput = document.getElementById('storeCep');
@@ -191,6 +195,17 @@ window.deleteStore = async (id) => {
         }
     }
 };
+// --- LÓGICA DE LOGOUT ---
+
+
+logoutButton.addEventListener('click', () => {
+    signOut(auth).then(() => {
+        // Logout bem-sucedido, redireciona para a página de login
+        window.location.href = '/login.html';
+    }).catch((error) => {
+        console.error('Erro ao fazer logout:', error);
+    });
+});
 
 document.getElementById('cancelStoreEdit').addEventListener('click', resetStoreForm);
 
