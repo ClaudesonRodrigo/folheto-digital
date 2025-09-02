@@ -17,8 +17,12 @@
             <form id="storeForm">
                 <input type="hidden" id="storeId">
                 <input type="text" id="storeName" placeholder="Nome da Mercearia" required>
-                <input type="text" id="storeAddress" placeholder="Nome da Rua e Número" required>
-                <input type="text" id="storeCityState" placeholder="Cidade e Estado (ex: Aracaju, SE)" required>
+                    <input type="text" id="storeCep" placeholder="CEP (apenas números)" maxlength="8">
+                    <input type="text" id="storeStreet" placeholder="Rua / Logradouro" required>
+                    <input type="text" id="storeNumber" placeholder="Número" required>
+                    <input type="text" id="storeNeighborhood" placeholder="Bairro" required>
+                    <input type="text" id="storeCity" placeholder="Cidade" required>
+                    <input type="text" id="storeState" placeholder="Estado (UF)" required>
                 <div class="input-group">
                     <span>+55</span>
                     <input type="text" id="storeWhatsapp" placeholder="DDD + Número (ex: 11999999999)" required>
@@ -77,6 +81,7 @@
         </table>
     </div>
 
-    <script type="module" src="js/admin.js"></script>
+    <script type="module" src="js/productManager.js"></script>
+    <script type="module" src="js/storeManager.js"></script>
 </body>
 </html>

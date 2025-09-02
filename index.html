@@ -3,38 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Folheto Digital</title> 
+    <title>Folheto Digital - Aumente as Vendas da Sua Mercearia!</title>
+    
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/frontend.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1 id="storeName">Carregando...</h1>
-        <p>Confira nossas promoções exclusivas!</p>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Sua Mercearia Cheia de Clientes. Todos os Dias.</h1>
+            <p class="subtitle">Transforme suas ofertas em vendas com um folheto digital moderno, interativo e que seus clientes vão amar compartilhar.</p>
+            <a href="#contact" class="cta-button">Quero Aumentar Minhas Vendas</a>
+        </div>
     </header>
 
-    <div class="container">
-        <section class="location">
-            <h2>Localização da Nossa Loja</h2>
-            <p id="storeAddress">Rua Exemplo, 123 - Cidade, Estado</p> 
-            <div id="mapContainer"></div> 
+    <main>
+        <section class="features">
+            <div class="container">
+                <h2>Chega de gastar com folhetos de papel que vão para o lixo!</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Alcance Moderno</h3>
+                        <p>Esteja no celular de todos os seus clientes, 24 horas por dia, com um link fácil de compartilhar no WhatsApp.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Economia Real</h3>
+                        <p>Reduza a zero seus custos com impressão e distribuição. Invista o que economizar no que realmente importa: seu negócio.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-edit"></i>
+                        <h3>Atualização Instantânea</h3>
+                        <p>Mudou um preço ou um produto entrou em promoção? Altere tudo em segundos no seu painel exclusivo, sem complicações.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <section class="showcase">
-            <h2>Produtos em Promoção</h2>
-            <div id="productList" class="showcase"></div>
+        <section class="examples">
+            <div class="container">
+                <h2>Veja como fica incrível!</h2>
+                <p>Confira os folhetos mais recentes criados na nossa plataforma.</p>
+                <div id="latest-flyers" class="flyers-grid">
+                    </div>
+            </div>
         </section>
-    </div>
 
-    <a href="#" id="whatsappLink" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2>Pronto para Vender Mais?</h2>
+                <p>Entre em contato e crie o seu folheto digital hoje mesmo!</p>
+                <a href="https://wa.me/SEUNUMEROWHATSAPP" class="cta-button large" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Falar pelo WhatsApp
+                </a>
+            </div>
+        </section>
+    </main>
 
     <footer>
-        <p id="footerText"></p>
+        <p>© 2025 Folheto Digital. Todos os direitos reservados.</p>
     </footer>
-    
-    <script type="module" src="js/frontend.js"></script>
+
+    <script type="module" src="js/landing.js"></script>
+
 </body>
 </html>
