@@ -2,9 +2,9 @@ import { db, storesRef } from './config.js';
 import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection, query, getDoc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
 // --- CONFIGURAÇÃO DO CLOUDINARY ---
-// PREENCHA COM AS SUAS INFORMAÇÕES!
 const CLOUDINARY_CLOUD_NAME = "dhzvc3vl";          // SEU CLOUD NAME
-const CLOUDINARY_UPLOAD_PRESET = "folheto-digital"; // SEU UPLOAD PRESET
+const CLOUDINARY_UPLOAD_PRESET = "testeupload";
+//const CLOUDINARY_UPLOAD_PRESET = "folheto-digital"; // SEU UPLOAD PRESET
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
 
@@ -22,7 +22,7 @@ let editingStoreId = null;
 let editingProductId = null;
 let selectedStoreId = null; 
 
-// --- Funções de Mercearia (permanecem as mesmas) ---
+// --- Funções de Mercearia ---
 async function loadStores() {
     storeTableBody.innerHTML = '';
     try {
@@ -106,13 +106,25 @@ function resetStoreForm() {
 document.getElementById('cancelStoreEdit').addEventListener('click', resetStoreForm);
 
 
-// --- Funções de Produtos (AGORA COM UPLOAD) ---
-
-// Função para fazer o upload da imagem para o Cloudinary
+// Função de diagnóstico para fazer o upload da imagem
 async function uploadImage(file) {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    // --- CÓDIGO DE DIAGNÓSTICO ADICIONADO ---
+    console.log("--- Iniciando Diagnóstico de Upload ---");
+    console.log("Cloud Name:", CLOUDINARY_CLOUD_NAME);
+    console.log("Upload Preset:", CLOUDINARY_UPLOAD_PRESET);
+    console.log("URL de Destino:", CLOUDINARY_URL);
+
+    // Vamos verificar tudo que está dentro do formData
+    console.log("Conteúdo que será enviado (FormData):");
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+    console.log("--- Fim do Diagnóstico ---");
+    // --- FIM DO CÓDIGO DE DIAGNÓSTICO ---
 
     try {
         const response = await fetch(CLOUDINARY_URL, {
@@ -121,6 +133,7 @@ async function uploadImage(file) {
         });
         const data = await response.json();
         if (data.secure_url) {
+            console.log("Upload bem-sucedido!", data.secure_url);
             return data.secure_url;
         } else {
             console.error('Resposta do Cloudinary:', data);
@@ -132,7 +145,6 @@ async function uploadImage(file) {
         return null;
     }
 }
-
 
 productForm.addEventListener('submit', async (e) => {
     e.preventDefault();
