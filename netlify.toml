@@ -1,0 +1,11 @@
+[build]
+  publish = "."
+  command = ""
+
+[[redirects]]
+  from = "/config"
+  to = "/.netlify/functions/config"
+  status = 200
+
+[functions]
+  directory = "functions"

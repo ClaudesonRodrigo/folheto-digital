@@ -49,3 +49,24 @@ th {
 .delete-btn {
     background-color: #f44336;
 }
+/* Estilo para o campo com prefixo */
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding-left: 10px;
+    margin: 10px 0;
+}
+
+.input-group span {
+    margin-right: 5px;
+    color: #555;
+}
+
+.input-group input {
+    border: none;
+    outline: none;
+    margin: 0;
+    padding: 10px 5px;
+}
