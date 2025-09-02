@@ -1,113 +1,150 @@
-/* --- GERAL E TIPOGRAFIA --- */
+/* --- GERAL E CORES --- */
 :root {
-    /* Definindo cores como variáveis para fácil manutenção */
     --primary-color: #4CAF50;
-    --secondary-color: #e44d25;
-    --background-color: #f4f4f4;
+    --secondary-color: #ff3d00; /* Laranja vibrante para preços */
+    --background-color: #ffffff; /* Fundo branco para clareza */
     --text-color: #333;
-    --card-background: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --card-background: #f9f9f9;
+    --shadow-color: rgba(0, 0, 0, 0.08);
 }
 
 body {
-    /* Usando a nova fonte que importamos */
     font-family: 'Poppins', sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 20px;
+}
+
 /* --- CABEÇALHO --- */
-header {
-    background-color: var(--primary-color);
-    color: var(--card-background);
-    text-align: center;
-    padding: 2rem 1rem;
-    box-shadow: 0 2px 5px var(--shadow-color);
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Espaço entre a logo e o nome */
+}
+
+.logo {
+    display: none; /* A logo fica escondida até o JavaScript carregá-la */
+    max-width: 200px;
+    max-height: 80px;
+    border-radius: 8px;
+    background-color: white; /* Fundo branco para logos com transparência */
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 header h1 {
-    /* Usando clamp() para fonte responsiva: min, ideal, max */
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
+    font-weight: 600;
     margin: 0;
 }
 
-/* --- SEÇÕES PRINCIPAIS --- */
-.location, .showcase {
+/* --- VITRINE DE PRODUTOS --- */
+.showcase h2 {
     text-align: center;
-    margin-bottom: 3rem;
-    padding: 0 1rem;
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-weight: 900;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
 }
 
-.location h2, .showcase h2 {
-    font-size: clamp(1.25rem, 4vw, 2rem);
-    margin-bottom: 1.5rem;
+.showcase p {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+    color: #666;
 }
 
-.location iframe {
-    width: 100%;
-    max-width: 800px; /* Limite para o mapa não ficar gigante */
-    height: 350px;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px var(--shadow-color);
-}
-
-/* --- VITRINE DE PRODUTOS (CSS GRID) --- */
-.showcase {
-    /* Esta parte já estava ótima com Grid, mantivemos a base */
+#productList {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    /* Começa com 2 colunas em telas pequenas */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    text-align: left;
 }
 
-/* --- CARD DE PRODUTO (CSS FLEXBOX) --- */
+/* --- CARD DE PRODUTO --- */
 .product {
     background-color: var(--card-background);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 5px var(--shadow-color);
-    
-    /* A MÁGICA DO FLEXBOX COMEÇA AQUI */
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden; /* Garante que a imagem não vaze das bordas arredondadas */
     display: flex;
-    flex-direction: column; /* Organiza os itens em coluna */
-    justify-content: space-between; /* Empurra o preço para baixo */
-    
+    flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product:hover {
-    transform: translateY(-5px); /* Efeito de "levantar" o card */
-    box-shadow: 0 6px 12px var(--shadow-color);
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px var(--shadow-color);
 }
 
 .product img {
-    max-width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1; /* Garante que a imagem seja sempre quadrada */
-    object-fit: cover; /* Evita que a imagem distorça */
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
-.product h3 {
-    font-size: 1.2em;
+.product-info {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Faz esta área crescer e empurrar o rodapé do card */
+}
+
+.product-info h3 {
+    font-size: 1.1em;
     font-weight: 600;
-    margin: 0.5rem 0;
+    margin: 0 0 0.5rem;
 }
 
-.product p {
-    font-weight: 300;
+.product-info p {
     font-size: 0.9em;
-    flex-grow: 1; /* Faz a descrição ocupar o espaço disponível, empurrando o preço */
-    margin-bottom: 1rem;
+    color: #666;
+    margin: 0 0 1rem;
+    flex-grow: 1;
+}
+
+.product-price-container {
+    text-align: right;
 }
 
 .product .price {
-    color: var(--secondary-color);
-    font-weight: bold;
-    font-size: 1.3em;
-    align-self: flex-end; /* Alinha o preço à direita */
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: 900;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    display: inline-block; /* Para o padding funcionar corretamente */
+}
+
+/* --- SEÇÃO DE LOCALIZAÇÃO --- */
+.location {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2.5rem 1rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+}
+
+.location h2 {
+    font-size: clamp(1.25rem, 4vw, 2rem);
+}
+
+.location iframe {
+    width: 100%;
+    max-width: 800px;
+    height: 350px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 /* --- BOTÃO WHATSAPP E RODAPÉ --- */
@@ -140,4 +177,20 @@ footer {
     background-color: var(--primary-color);
     color: white;
     margin-top: 40px;
+}
+
+/* --- RESPONSIVIDADE (MEDIA QUERIES) --- */
+
+/* Telas médias (tablets) - 3 colunas */
+@media (min-width: 768px) {
+    #productList {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Telas grandes (desktops) - 4 colunas */
+@media (min-width: 1024px) {
+    #productList {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }

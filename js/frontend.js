@@ -3,6 +3,7 @@ import { getDoc, collection, getDocs, query, where, limit, doc } from 'https://w
 
 // Elementos da página
 const storeNameEl = document.getElementById('storeName');
+const storeLogoEl = document.getElementById('storeLogo');
 const mapContainer = document.getElementById('mapContainer');
 const productList = document.getElementById('productList');
 const whatsappLink = document.getElementById('whatsappLink');
@@ -31,6 +32,12 @@ async function loadFlyer() {
         }
 
         const storeData = storeSnapshot.data();
+
+        // Carrega a logo da mercearia
+        if (storeData.logoUrl) {
+            storeLogoEl.src = storeData.logoUrl;
+            storeLogoEl.style.display = 'block'; // Este comando faz a logo aparecer
+        }
 
         // 3. Atualiza as informações da página com os dados da mercearia
         document.title = `Folheto Digital - ${storeData.nome}`;

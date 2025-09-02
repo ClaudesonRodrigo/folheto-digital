@@ -30,11 +30,13 @@ async function loadLatestFlyers() {
             card.target = '_blank'; // Abrir em nova aba
             card.classList.add('flyer-card');
 
-            // Tenta pegar a primeira imagem de produto como capa
-            // (Esta é uma melhoria, por enquanto usamos uma cor)
+            // Verifica se a mercearia tem uma logo, senão usa um placeholder
+            const imageUrl = store.logoUrl || 'https://via.placeholder.com/400x200.png?text=Sem+Logo';
+
             card.innerHTML = `
-                <div class="flyer-card-image" style="background-color: #e9e9e9;">
-                    </div>
+                <div class="flyer-card-image">
+                    <img src="${imageUrl}" alt="Logo de ${store.nome}">
+                </div>
                 <div class="flyer-card-content">
                     <h3>${store.nome}</h3>
                     <p>${store.endereco.cidade}, ${store.endereco.estado}</p>

@@ -17,6 +17,10 @@
             <form id="storeForm">
                 <input type="hidden" id="storeId">
                 <input type="text" id="storeName" placeholder="Nome da Mercearia" required>
+                    <label for="storeLogoFile">Logo da Mercearia:</label>
+                    <input type="file" id="storeLogoFile" accept="image/*">
+                    <img id="logoPreview" src="" alt="Pré-visualização da logo" style="width: 150px; display: none; margin-top: 10px;">
+                    <input type="hidden" id="storeLogoUrl">
                     <input type="text" id="storeCep" placeholder="CEP (apenas números)" maxlength="8">
                     <input type="text" id="storeStreet" placeholder="Rua / Logradouro" required>
                     <input type="text" id="storeNumber" placeholder="Número" required>
