@@ -123,7 +123,6 @@ async function uploadImage(file) {
         if (data.secure_url) {
             return data.secure_url;
         } else {
-            // Adicionando mais detalhes ao erro
             console.error('Resposta do Cloudinary:', data);
             throw new Error('Falha no upload da imagem. Resposta do servidor não contém URL segura.');
         }

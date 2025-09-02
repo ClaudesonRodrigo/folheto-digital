@@ -1,4 +1,3 @@
-// Importamos as funções necessárias e o 'db'
 import { db } from './config.js';
 import { getDoc, collection, getDocs, query, where, limit, doc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
