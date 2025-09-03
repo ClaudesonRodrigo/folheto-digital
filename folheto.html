@@ -39,7 +39,27 @@
     <footer>
         <p id="footerText"></p>
     </footer>
-    
+    <div id="productModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeProductModal()">×</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImg" src="" alt="Imagem do produto">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalName">Nome do Produto</h2>
+                    <p id="modalDesc">Descrição detalhada do produto.</p>
+                    <div class="modal-price-container">
+                        <span id="modalPrice" class="price">R$ 0,00</span>
+                    </div>
+                    <a id="modalWhatsappLink" href="#" class="whatsapp-button" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Tenho Interesse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="module" src="js/frontend.js"></script>
 </body>
 </html>
