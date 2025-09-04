@@ -106,7 +106,6 @@ async function loadFlyer() {
                 <img src="${data.imageUrl}" alt="${data.name}">
                 <div class="product-info">
                     <h3>${data.name}</h3>
-                    <p>${data.description}</p>
                     <div class="product-price-container">
                         <span class="price">R$ ${data.price.toFixed(2)}</span>
                     </div>
