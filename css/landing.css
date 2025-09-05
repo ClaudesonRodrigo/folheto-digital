@@ -72,7 +72,10 @@ body {
 .customer-experience {
     background-color: var(--light-color);
 }
-
+/* --- NOVA SEÇÃO DE ALCANCE --- */
+.whatsapp-reach {
+    padding: 5rem 0;
+}
 .content-split {
     display: grid;
     grid-template-columns: 1fr; /* Coluna única em mobile */
