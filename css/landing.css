@@ -17,12 +17,31 @@ body {
     padding: 0 20px;
 }
 
-/* --- Seção Hero --- */
+/* --- Seção Hero Modificada --- */
 .hero {
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1583258292688-d0213dc5a3a8?q=80&w=1974&auto=format&fit=crop') no-repeat center center/cover;
     color: white;
-    padding: 6rem 0;
     text-align: center;
+    position: relative; /* Essencial para o posicionamento do slider e do texto */
+    height: 80vh; /* Altura do cabeçalho */
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Garante que nada saia dos limites */
+}
+
+/* Camada de sobreposição para o texto */
+.hero-text-overlay {
+    position: relative; /* Fica acima do slider */
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro para legibilidade */
+    padding: 4rem 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .hero h1 {
@@ -240,26 +259,21 @@ footer {
     text-align: center;
     padding: 1.5rem;
 }
-/* --- ESTILOS DO STORYBOOK --- */
-.storybook {
-    padding: 3rem 0;
-    background-color: var(--light-color);
+
+/* --- ESTILOS DO STORYBOOK DENTRO DO HERO --- */
+.hero .storybook-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Fica abaixo do texto */
 }
 
-.storybook-container {
-    max-width: 800px;
-    margin: auto;
-    position: relative;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.storybook-slides {
+.hero .storybook-slides {
     position: relative;
     width: 100%;
-    /* Mantém a proporção da imagem */
-    aspect-ratio: 16 / 9; 
+    height: 100%;
 }
 
 .slide {
@@ -279,33 +293,22 @@ footer {
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Garante que a imagem cubra todo o espaço */
 }
 
+/* Removido o caption, pois o texto agora está no overlay */
 .slide-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: white;
-    padding: 3rem 1.5rem 1.5rem;
-    text-align: center;
+    display: none;
 }
 
-.slide-caption h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem;
-}
-
-.storybook-nav {
+.hero .storybook-nav {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
+    z-index: 3; /* Garante que a navegação fique acima de tudo */
 }
 
 .nav-dot {
