@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os Produtos</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/frontend.css">
+    <link rel="stylesheet" href="css/produtos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img id="storeLogo" src="" alt="Logo da Mercearia" class="logo">
+            <h1 id="storeName">Carregando...</h1>
+        </div>
+        <p>Confira todos os nossos produtos!</p>
+    </header>
+
+    <div class="container">
+        <a href="#" id="backToFlyerLink" class="back-link">
+            <i class="fas fa-arrow-left"></i> Voltar para as Promoções
+        </a>
+
+        <section class="showcase">
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Buscar produto...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div id="allProductList" class="product-grid">
+                <!-- Produtos serão inseridos aqui pelo JavaScript -->
+            </div>
+            <p id="noResultsMessage" class="hidden">Nenhum produto encontrado com este nome.</p>
+        </section>
+    </div>
+
+    <a href="#" id="whatsappLink" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <p id="footerText"></p>
+    </footer>
+
+    <!-- Modal de Produto (reutilizado) -->
+    <div id="productModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeProductModal()">×</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImg" src="" alt="Imagem do produto">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalName">Nome do Produto</h2>
+                    <p id="modalDesc">Descrição detalhada do produto.</p>
+                    <div class="modal-price-container">
+                        <span id="modalPrice" class="price">R$ 0,00</span>
+                    </div>
+                    <a id="modalWhatsappLink" href="#" class="whatsapp-button" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        Tenho Interesse
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/produtos.js"></script>
+</body>
+</html>
