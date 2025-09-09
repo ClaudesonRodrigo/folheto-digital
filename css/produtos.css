@@ -1,0 +1,91 @@
+/* Estilos específicos para a página de todos os produtos */
+
+/* Link de "Voltar" */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.back-link:hover {
+    color: var(--dark-color);
+}
+
+/* Container da Barra de Busca */
+.search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 12px 20px 12px 45px; /* Espaço para o ícone */
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.search-container .fa-search {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+/* Grid de Produtos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Destaque para produtos em promoção */
+.product.promotional {
+    border: 2px solid var(--secondary-color);
+    position: relative;
+    overflow: visible; /* Permite que o pseudo-elemento saia do card */
+}
+
+/* Tag "PROMOÇÃO" */
+.product.promotional::before {
+    content: 'OFERTA';
+    position: absolute;
+    top: -12px;
+    right: 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 1;
+}
+
+/* Mensagem de "nenhum resultado" */
+#noResultsMessage {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    padding: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Ajustes responsivos para a grid */
+@media (max-width: 480px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
