@@ -8,6 +8,7 @@ const mapContainer = document.getElementById('mapContainer');
 const productList = document.getElementById('productList');
 const whatsappLink = document.getElementById('whatsappLink');
 const footerText = document.getElementById('footerText');
+const viewAllProductsLink = document.getElementById('viewAllProductsLink'); // Novo elemento
 
 // --- Elementos do Modal ---
 const productModal = document.getElementById('productModal');
@@ -18,7 +19,7 @@ const modalPrice = document.getElementById('modalPrice');
 const modalWhatsappLink = document.getElementById('modalWhatsappLink');
 
 // --- Variáveis Globais ---
-let productsData = {}; // Objeto para guardar os dados de todos os produtos
+let productsData = {}; // Objeto para guardar os dados dos produtos promocionais
 let storeWhatsappNumber = ''; // Para guardar o WhatsApp da loja
 
 // --- Funções do Modal ---
@@ -26,17 +27,14 @@ window.openProductModal = (productId) => {
     const product = productsData[productId]; // Pega os dados do produto clicado
 
     if (product) {
-        // 1. Preenche o modal com os dados do produto
         modalImg.src = product.imageUrl;
         modalName.textContent = product.name;
         modalDesc.textContent = product.description;
         modalPrice.textContent = `R$ ${product.price.toFixed(2)}`;
 
-        // 2. Cria a mensagem personalizada para o WhatsApp
         const message = encodeURIComponent(`Olá! Tenho interesse no produto: *${product.name}* - R$ ${product.price.toFixed(2)}`);
         modalWhatsappLink.href = `https://wa.me/${storeWhatsappNumber}?text=${message}`;
 
-        // 3. Mostra o modal
         productModal.classList.remove('hidden');
     }
 };
@@ -45,7 +43,6 @@ window.closeProductModal = () => {
     productModal.classList.add('hidden');
 };
 
-// Fecha o modal se o usuário clicar no fundo preto
 productModal.addEventListener('click', (event) => {
     if (event.target === productModal) {
         closeProductModal();
@@ -62,6 +59,9 @@ async function loadFlyer() {
         storeNameEl.textContent = "Folheto não encontrado!";
         return;
     }
+    
+    // Configura o link para a nova página de todos os produtos
+    viewAllProductsLink.href = `/produtos.html?id=${storeId}`;
 
     try {
         const storeDocRef = doc(db, 'mercerias', storeId);
@@ -72,7 +72,7 @@ async function loadFlyer() {
         }
 
         const storeData = storeSnapshot.data();
-        storeWhatsappNumber = storeData.whatsapp; // Guarda o número para usar no modal
+        storeWhatsappNumber = storeData.whatsapp;
 
         // --- Preenche as informações da loja ---
         document.title = `Folheto Digital - ${storeData.nome}`;
@@ -88,18 +88,17 @@ async function loadFlyer() {
 
         // --- Busca os produtos promocionais ---
         const productsRef = collection(db, 'mercerias', storeId, 'produtos');
-        const q = query(productsRef, where('isPromotional', '==', true), limit(10));
+        const q = query(productsRef, where('isPromotional', '==', true), limit(12)); // Alterado para 12
         const productsSnapshot = await getDocs(q);
 
         productList.innerHTML = '';
         productsSnapshot.forEach(doc => {
             const productId = doc.id;
             const data = doc.data();
-            productsData[productId] = data; // Guarda os dados do produto no nosso objeto
+            productsData[productId] = data;
 
             const productDiv = document.createElement('div');
             productDiv.classList.add('product');
-            // Adiciona o evento de clique que chama a função do modal
             productDiv.setAttribute('onclick', `openProductModal('${productId}')`);
 
             productDiv.innerHTML = `
