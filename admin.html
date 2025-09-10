@@ -53,6 +53,7 @@
         </table>
     </div>
 
+<<<<<<< HEAD
     <!-- Wrapper para o Gerenciamento de Categorias e Produtos -->
     <div id="managementWrapper" style="display: none;">
 
@@ -127,6 +128,77 @@
     </div>
 
 
+=======
+    <!-- SEÇÃO DE CATEGORIAS -->
+    <div class="container" id="categoriesSection" style="display:none;">
+        <hr>
+        <h2 id="selectedStoreNameForCategories"></h2>
+        <h3>Gerenciar Categorias</h3>
+        <div class="form-container">
+            <form id="categoryForm">
+                <input type="hidden" id="categoryId">
+                <input type="text" id="categoryName" placeholder="Nome da Categoria (ex: Pizzas)" required>
+                <button type="submit">Salvar Categoria</button>
+            </form>
+        </div>
+    
+        <table id="categoryTable">
+            <thead>
+                <tr>
+                    <th>Nome da Categoria</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <div class="container" id="productsSection" style="display:none;">
+        <hr>
+        <h2 id="selectedStoreName"></h2>
+        <h3>Gerenciar Itens do Cardápio</h3>
+        <div class="form-container">
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <input type="text" id="name" placeholder="Nome do Item (ex: Pizza Calabresa)" required>
+                <input type="text" id="description" placeholder="Descrição (ex: Molho, queijo, calabresa...)" required>
+                <input type="number" id="price" placeholder="Preço (ex: 35.50)" step="0.01" required>
+                
+                <label for="productCategory">Categoria:</label>
+                <select id="productCategory" required>
+                    <option value="">-- Selecione uma Categoria --</option>
+                </select>
+
+                <label for="imageFile">Imagem do Item:</label>
+                <input type="file" id="imageFile" accept="image/*">
+                <img id="imagePreview" src="" alt="Pré-visualização" style="width: 100px; display: none; margin-top: 10px;">
+                <input type="hidden" id="imageUrl">
+                <label for="isPromotional">
+                    <input type="checkbox" id="isPromotional"> Item em Destaque/Promoção
+                </label>
+                <button type="submit">Salvar Item</button>
+                <button type="button" id="cancelProductEdit" style="display:none; background-color: #ccc;">Cancelar</button>
+            </form>
+        </div>
+
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Categoria</th>
+                    <th>Imagem</th>
+                    <th>Destaque</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+>>>>>>> 7d0c7da281aa54a84d87f67cee47a6557789f62c
     <!-- Chamadas dos scripts -->
     <script type="module" src="js/categoryManager.js"></script>
     <script type="module" src="js/productManager.js"></script>
@@ -134,3 +206,7 @@
 </body>
 </html>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7d0c7da281aa54a84d87f67cee47a6557789f62c
