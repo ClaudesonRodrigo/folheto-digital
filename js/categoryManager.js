@@ -1,5 +1,5 @@
 import { db } from './config.js';
-import { getDocs, addDoc, deleteDoc, doc, collection, query, where, getCountFromServer } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+import { getDocs, addDoc, deleteDoc, doc, collection, query, where } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
 // --- Variáveis Globais de Categorias ---
 const categoryForm = document.getElementById('categoryForm');
@@ -86,11 +86,14 @@ categoryForm.addEventListener('submit', async (e) => {
 // Exclui uma categoria
 window.deleteCategory = async (categoryId, categoryName) => {
     if (!selectedStoreIdForCategories) return;
+    
+    // --- CORREÇÃO APLICADA AQUI ---
+    // Em vez de 'getCountFromServer', usamos 'getDocs' e pegamos o tamanho do resultado.
     const productsRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'produtos');
     const q = query(productsRef, where("categoryId", "==", categoryId));
     
-    const snapshot = await getCountFromServer(q);
-    const productCount = snapshot.data().count;
+    const productsSnapshot = await getDocs(q);
+    const productCount = productsSnapshot.size; // Usamos .size para contar
 
     if (productCount > 0) {
         alert(`Não é possível excluir a categoria "${categoryName}" pois ela está sendo usada por ${productCount} item(ns).`);
