@@ -1,9 +1,10 @@
 import { db } from './config.js';
 import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+import { initCategoryManager } from './categoryManager.js';
 
 // --- CONFIGURAÇÃO DO CLOUDINARY ---
 const CLOUDINARY_CLOUD_NAME = "dhzzvc3vl";
-const CLOUDINARY_UPLOAD_PRESET = "folheto-digital"; // ou "testeupload" se estiver usando o novo
+const CLOUDINARY_UPLOAD_PRESET = "folheto-digital";
 const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`;
 
 // --- Variáveis Globais de Produtos ---
@@ -13,6 +14,7 @@ const productTableBody = document.querySelector('#productTable tbody');
 const selectedStoreNameEl = document.getElementById('selectedStoreName');
 const imagePreview = document.getElementById('imagePreview');
 const imageFileInput = document.getElementById('imageFile');
+const managementWrapper = document.getElementById('managementWrapper');
 
 let editingProductId = null;
 let selectedStoreId = null; 
@@ -52,6 +54,7 @@ async function loadProducts() {
                 <td>${data.name}</td>
                 <td>${data.description}</td>
                 <td>R$ ${data.price.toFixed(2)}</td>
+                <td>${data.categoryName || 'Sem Categoria'}</td>
                 <td><img src="${data.imageUrl}" alt="${data.name}" style="width:50px;"></td>
                 <td>${data.isPromotional ? 'Sim' : 'Não'}</td>
                 <td class="actions">
@@ -79,7 +82,7 @@ function resetProductForm() {
 // --- Eventos e Funções Globais de Produtos ---
 productForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!selectedStoreId) return alert("Por favor, selecione uma mercearia primeiro.");
+    if (!selectedStoreId) return alert("Por favor, selecione uma loja primeiro.");
     
     const submitButton = productForm.querySelector('button[type="submit"]');
     submitButton.textContent = 'Salvando...';
@@ -92,25 +95,30 @@ productForm.addEventListener('submit', async (e) => {
         const newImageUrl = await uploadImage(imageFile);
         if (newImageUrl) imageUrl = newImageUrl;
         else {
-            submitButton.textContent = 'Salvar Produto';
+            submitButton.textContent = 'Salvar Item';
             submitButton.disabled = false;
             return; 
         }
     }
     
     if (!imageUrl) {
-        alert('Por favor, selecione uma imagem para o produto.');
-        submitButton.textContent = 'Salvar Produto';
+        alert('Por favor, selecione uma imagem para o item.');
+        submitButton.textContent = 'Salvar Item';
         submitButton.disabled = false;
         return;
     }
+
+    const categorySelect = document.getElementById('productCategory');
+    const selectedCategoryOption = categorySelect.options[categorySelect.selectedIndex];
 
     const productData = {
         name: document.getElementById('name').value,
         description: document.getElementById('description').value,
         price: parseFloat(document.getElementById('price').value),
         isPromotional: document.getElementById('isPromotional').checked,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        categoryId: selectedCategoryOption.value,
+        categoryName: selectedCategoryOption.textContent
     };
 
     try {
@@ -124,7 +132,7 @@ productForm.addEventListener('submit', async (e) => {
     } catch (error) {
         console.error('Erro ao salvar produto:', error);
     } finally {
-        submitButton.textContent = 'Salvar Produto';
+        submitButton.textContent = 'Salvar Item';
         submitButton.disabled = false;
     }
 });
@@ -137,6 +145,7 @@ window.editProduct = (product) => {
     document.getElementById('price').value = product.price;
     document.getElementById('isPromotional').checked = product.isPromotional;
     document.getElementById('imageUrl').value = product.imageUrl;
+    document.getElementById('productCategory').value = product.categoryId || '';
     imagePreview.src = product.imageUrl;
     imagePreview.style.display = 'block';
     document.getElementById('cancelProductEdit').style.display = 'inline-block';
@@ -144,7 +153,7 @@ window.editProduct = (product) => {
 };
 
 window.deleteProduct = async (productId) => {
-    if (confirm('Tem certeza que deseja excluir este produto?')) {
+    if (confirm('Tem certeza que deseja excluir este item?')) {
         try {
             const productDocRef = doc(db, 'mercerias', selectedStoreId, 'produtos', productId);
             await deleteDoc(productDocRef);
@@ -157,9 +166,21 @@ window.deleteProduct = async (productId) => {
 
 window.manageProducts = (storeId, storeName) => {
     selectedStoreId = storeId;
-    selectedStoreNameEl.textContent = `Gerenciando Produtos para: ${storeName}`;
-    productSection.style.display = 'block';
+    
+    // Mostra o container principal
+    managementWrapper.style.display = 'block';
+
+    // Define os títulos
+    selectedStoreNameEl.textContent = `Gerenciando Itens para: ${storeName}`;
+    document.getElementById('selectedStoreNameForCategories').textContent = `Gerenciando Categorias para: ${storeName}`;
+
+    // Carrega os dados
     loadProducts();
+    initCategoryManager(storeId);
+
+    // Rola a tela para a área de gerenciamento
+    managementWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
 document.getElementById('cancelProductEdit').addEventListener('click', resetProductForm);
+
