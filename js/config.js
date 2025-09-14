@@ -4,20 +4,16 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getFirestore, collection } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-// A configuração agora lê as variáveis de ambiente
-const firebaseConfig = {
-    apiKey: import.meta.env.VITE_API_KEY,
-    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_APP_ID,
-    measurementId: import.meta.env.VITE_MEASUREMENT_ID 
-};
+// A configuração agora lê as variáveis de um objeto global injetado pelo Netlify.
+// Este objeto é criado pelo recurso "Snippet Injection" que configuramos no painel do Netlify.
+const firebaseConfig = window.__FIREBASE_CONFIG__;
 
-// O resto do arquivo permanece o mesmo
+// Inicializar Firebase com a configuração recebida
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storesRef = collection(db, 'lojas'); // Corrigido para a coleção mais genérica 'lojas'
 
+// Definir a referência para a coleção 'lojas', que é a que você está usando nos scripts mais recentes.
+const storesRef = collection(db, 'lojas');
+
+// Exportar as variáveis para serem usadas em outros arquivos do projeto
 export { db, storesRef, app };
