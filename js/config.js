@@ -1,22 +1,23 @@
+// js/config.js
+
 // Importar os módulos necessários do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getFirestore, collection } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-// Configuração do Firebase
+// A configuração agora lê as variáveis de ambiente
 const firebaseConfig = {
-    apiKey: "AIzaSyAuf4-eFM-rGXlw4oXeeFErIXluLSgfMO8",
-    authDomain: "folheto-digital-169b1.firebaseapp.com",
-    projectId: "folheto-digital-169b1",
-    storageBucket: "folheto-digital-169b1.firebasestorage.app",
-    messagingSenderId: "777763357954",
-    appId: "1:777763357954:web:8255e223cb7d3ceff52e1b",
-    measurementId: "G-HW1FWPV48H"
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID 
 };
 
-// Inicializar Firebase
+// O resto do arquivo permanece o mesmo
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storesRef = collection(db, 'mercerias'); // Alterado para a nova coleção
+const storesRef = collection(db, 'lojas'); // Corrigido para a coleção mais genérica 'lojas'
 
-// Não vamos mais exportar productsRef daqui, pois ela dependerá da mercearia selecionada
 export { db, storesRef, app };
