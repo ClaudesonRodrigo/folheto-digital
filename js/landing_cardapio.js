@@ -2,20 +2,21 @@ import { db } from './config.js';
 import { getDocs, query, where, limit, collection } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
 
 const latestFlyersContainer = document.getElementById('latest-flyers');
-const storesRef = collection(db, 'lojas'); // Aponta para a nova coleção 'lojas'
+// ATENÇÃO: Se você renomeou a coleção no Firebase para 'lojas', mude a linha abaixo.
+// Se ainda estiver usando 'mercerias' para todos, mantenha como está.
+const storesRef = collection(db, 'merarias'); 
 
 async function loadLatestFlyers() {
     if (!latestFlyersContainer) return;
 
     try {
-        // --- MUDANÇA PRINCIPAL AQUI ---
-        // Agora, a consulta busca apenas lojas com o segmento "mercearia"
-        const q = query(storesRef, where("segmento", "==", "mercearia"), limit(3));
+        // A mágica acontece aqui: filtramos para mostrar apenas o segmento "cardapio"
+        const q = query(storesRef, where("segmento", "==", "cardapio"), limit(3));
 
         const snapshot = await getDocs(q);
 
         if (snapshot.empty) {
-            latestFlyersContainer.innerHTML = '<p>Nenhum folheto de exemplo disponível no momento.</p>';
+            latestFlyersContainer.innerHTML = '<p>Nenhum cardápio de exemplo disponível no momento.</p>';
             return;
         }
 
@@ -30,7 +31,7 @@ async function loadLatestFlyers() {
             card.target = '_blank';
             card.classList.add('flyer-card');
 
-            const imageUrl = store.logoUrl || 'https://placehold.co/400x200/2c6e49/ffffff?text=Sem+Logo';
+            const imageUrl = store.logoUrl || 'https://placehold.co/400x200/c82a34/ffffff?text=Sem+Logo';
 
             card.innerHTML = `
                 <div class="flyer-card-image">
@@ -39,7 +40,7 @@ async function loadLatestFlyers() {
                 <div class="flyer-card-content">
                     <h3>${store.nome}</h3>
                     <p>${store.endereco.cidade}, ${store.endereco.estado}</p>
-                    <span class="view-flyer">Ver Ofertas</span>
+                    <span class="view-flyer">Ver Cardápio</span>
                 </div>
             `;
             
@@ -47,7 +48,7 @@ async function loadLatestFlyers() {
         });
 
     } catch (error) {
-        console.error("Erro ao carregar folhetos de exemplo:", error);
+        console.error("Erro ao carregar cardápios de exemplo:", error);
         latestFlyersContainer.innerHTML = '<p>Erro ao carregar exemplos. Tente novamente mais tarde.</p>';
     }
 }
