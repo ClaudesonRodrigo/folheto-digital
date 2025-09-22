@@ -64,7 +64,7 @@ async function loadFlyer() {
     viewAllProductsLink.href = `/produtos.html?id=${storeId}`;
 
     try {
-        const storeDocRef = doc(db, 'mercerias', storeId);
+        const storeDocRef = doc(db, 'lojas', storeId);
         const storeSnapshot = await getDoc(storeDocRef);
         if (!storeSnapshot.exists()) {
             storeNameEl.textContent = "Mercearia não encontrada!";
@@ -87,7 +87,7 @@ async function loadFlyer() {
         footerText.textContent = `© ${new Date().getFullYear()} ${storeData.nome}. Todos os direitos reservados.`;
 
         // --- Busca os produtos promocionais ---
-        const productsRef = collection(db, 'mercerias', storeId, 'produtos');
+        const productsRef = collection(db, 'lojas', storeId, 'produtos');
         const q = query(productsRef, where('isPromotional', '==', true), limit(12)); // Alterado para 12
         const productsSnapshot = await getDocs(q);
 
