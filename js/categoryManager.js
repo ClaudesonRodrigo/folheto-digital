@@ -13,7 +13,7 @@ let selectedStoreIdForCategories = null;
 async function loadCategories() {
     if (!selectedStoreIdForCategories) return;
     categoryTableBody.innerHTML = '';
-    const categoriesRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'categorias');
+    const categoriesRef = collection(db, 'lojas', selectedStoreIdForCategories, 'categorias');
     try {
         const snapshot = await getDocs(categoriesRef);
         snapshot.forEach(doc => {
@@ -39,7 +39,7 @@ async function populateCategoryDropdown() {
     if (!categorySelect) return;
     
     categorySelect.innerHTML = '<option value="">-- Carregando Categorias... --</option>';
-    const categoriesRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'categorias');
+    const categoriesRef = collection(db, 'lojas', selectedStoreIdForCategories, 'categorias');
     
     try {
         const snapshot = await getDocs(categoriesRef);
@@ -71,7 +71,7 @@ categoryForm.addEventListener('submit', async (e) => {
     if (!categoryName) return;
 
     const categoryData = { name: categoryName };
-    const categoriesRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'categorias');
+    const categoriesRef = collection(db, 'lojas', selectedStoreIdForCategories, 'categorias');
 
     try {
         await addDoc(categoriesRef, categoryData);
@@ -89,7 +89,7 @@ window.deleteCategory = async (categoryId, categoryName) => {
     
     // --- CORREÇÃO APLICADA AQUI ---
     // Em vez de 'getCountFromServer', usamos 'getDocs' e pegamos o tamanho do resultado.
-    const productsRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'produtos');
+    const productsRef = collection(db, 'lojas', selectedStoreIdForCategories, 'produtos');
     const q = query(productsRef, where("categoryId", "==", categoryId));
     
     const productsSnapshot = await getDocs(q);

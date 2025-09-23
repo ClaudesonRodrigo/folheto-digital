@@ -36,6 +36,12 @@
                     <span>+55</span>
                     <input type="text" id="storeWhatsapp" placeholder="DDD + Número (ex: 11999999999)" required>
                 </div>
+                <label for="storeSegment">Segmento da Loja:</label>
+                <select id="storeSegment" required>
+                    <option value="" disabled selected>-- Selecione um Segmento --</option>
+                    <option value="mercearia">Mercearia / Supermercado</option>
+                    <option value="cardapio">Restaurante / Cardápio</option>
+                </select>
                 <button type="submit">Salvar Loja</button>
                 <button type="button" id="cancelStoreEdit" style="display:none; background-color: #ccc;">Cancelar</button>
             </form>
