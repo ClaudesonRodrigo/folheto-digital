@@ -200,6 +200,11 @@ header h1 {
 .whatsapp-float:hover {
     transform: scale(1.1);
 }
+/* --- Estilo para feedback no botão do WhatsApp --- */
+.whatsapp-button.added {
+    background-color: #28a745; /* Verde sucesso */
+    transform: scale(1.05);
+}
 
 footer {
     text-align: center;
@@ -315,5 +320,57 @@ footer {
 @media (min-width: 768px) {
     .modal-body {
         grid-template-columns: 1fr 1fr;
+    }
+}
+/* --- Ajuste para 4 colunas em telas grandes --- */
+@media (min-width: 1200px) {
+    #productList {
+        /* Força a grade a ter 4 colunas de tamanho igual */
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* --- Estilos do Skeleton Loading --- */
+.product-skeleton {
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.skeleton-img {
+    height: 230px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-text {
+    height: 20px;
+    width: 80%;
+    margin: 1rem auto;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-price {
+    height: 40px;
+    width: 50%;
+    margin: 0 auto;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { background-color: #e0e0e0; }
+    50% { background-color: #d4d4d4; }
+    100% { background-color: #e0e0e0; }
+}
+/* --- Ajuste para 4 colunas em telas grandes --- */
+@media (min-width: 1200px) {
+    .product-grid {
+        /* Força a grade a ter 4 colunas de tamanho igual */
+        grid-template-columns: repeat(4, 1fr);
     }
 }

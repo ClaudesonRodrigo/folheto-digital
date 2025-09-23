@@ -24,7 +24,7 @@ let storeWhatsappNumber = ''; // Para guardar o WhatsApp da loja
 
 // --- Funções do Modal ---
 window.openProductModal = (productId) => {
-    const product = productsData[productId]; // Pega os dados do produto clicado
+    const product = productsData[productId];
 
     if (product) {
         modalImg.src = product.imageUrl;
@@ -34,6 +34,20 @@ window.openProductModal = (productId) => {
 
         const message = encodeURIComponent(`Olá! Tenho interesse no produto: *${product.name}* - R$ ${product.price.toFixed(2)}`);
         modalWhatsappLink.href = `https://wa.me/${storeWhatsappNumber}?text=${message}`;
+
+        // Reseta o botão para o estado original
+        modalWhatsappLink.textContent = 'Tenho Interesse';
+        modalWhatsappLink.classList.remove('added');
+        
+        // Adiciona um listener para o clique
+        const handleInterestClick = () => {
+            modalWhatsappLink.textContent = 'Adicionado!';
+            modalWhatsappLink.classList.add('added');
+
+            // Remove o listener para não acumular múltiplos cliques
+            modalWhatsappLink.removeEventListener('click', handleInterestClick);
+        };
+        modalWhatsappLink.addEventListener('click', handleInterestClick);
 
         productModal.classList.remove('hidden');
     }
