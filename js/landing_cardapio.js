@@ -4,7 +4,7 @@ import { getDocs, query, where, limit, collection } from 'https://www.gstatic.co
 const latestFlyersContainer = document.getElementById('latest-flyers');
 // ATENÇÃO: Se você renomeou a coleção no Firebase para 'lojas', mude a linha abaixo.
 // Se ainda estiver usando 'mercerias' para todos, mantenha como está.
-const storesRef = collection(db, 'merarias'); 
+const storesRef = collection(db, 'lojas'); 
 
 async function loadLatestFlyers() {
     if (!latestFlyersContainer) return;
