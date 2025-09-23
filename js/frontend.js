@@ -88,6 +88,15 @@ async function loadFlyer() {
         const storeData = storeSnapshot.data();
         storeWhatsappNumber = storeData.whatsapp;
 
+        const pageTitle = document.querySelector('.showcase h2');
+        if (storeData.segmento === 'servicos') {
+            pageTitle.textContent = '✨ Nossos Serviços em Destaque';
+            document.title = `Serviços - ${storeData.nome}`;
+        } else {
+            pageTitle.textContent = '🔥 Promoções da Semana';
+            document.title = `Folheto Digital - ${storeData.nome}`;
+        }
+
         // --- Preenche as informações da loja ---
         document.title = `Folheto Digital - ${storeData.nome}`;
         storeNameEl.textContent = `${storeData.nome} - Folheto Digital`;
