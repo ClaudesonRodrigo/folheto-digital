@@ -1,0 +1,28 @@
+/*
+ * Tema para o segmento Cardápio/Restaurante
+ * Este arquivo sobrescreve as cores e fontes do frontend.css
+ */
+
+:root {
+    /* Cores inspiradas na landing page de cardápio */
+    --primary-color: #c82a34;   /* Vermelho apetitoso */
+    --secondary-color: #ffc107; /* Amarelo vibrante */
+}
+
+body {
+    /* Podemos usar uma fonte diferente para dar um ar de restaurante */
+    font-family: 'Poppins', sans-serif;
+}
+
+.showcase h2 {
+    /* Mantendo o título com a nova cor primária */
+    color: var(--primary-color);
+    text-transform: none; /* Tira o "PROMOÇÕES DA SEMANA" e deixa o texto original */
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+
+.product .price {
+    /* Usando a cor secundária para o preço, como na landing page */
+    background-color: var(--secondary-color);
+    color: #2d2d2d; /* Texto escuro para melhor contraste no amarelo */
+}
