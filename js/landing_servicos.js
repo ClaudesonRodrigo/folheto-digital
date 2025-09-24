@@ -11,7 +11,7 @@ async function loadLatestFlyers() {
 
     try {
         // A mágica acontece aqui: filtramos para mostrar apenas o segmento "cardapio"
-        const q = query(storesRef, where("segmento", "==", "cardapio"), limit(3));
+        const q = query(storesRef, where("segmento", "==", "servicos"), limit(3));
 
         const snapshot = await getDocs(q);
 

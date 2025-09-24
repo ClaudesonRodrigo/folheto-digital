@@ -13,7 +13,7 @@ let selectedStoreIdForCategories = null;
 async function loadCategories() {
     if (!selectedStoreIdForCategories) return;
     categoryTableBody.innerHTML = '';
-    const categoriesRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'categorias');
+    const categoriesRef = collection(db, 'lojas', selectedStoreIdForCategories, 'categorias');
     try {
         const snapshot = await getDocs(categoriesRef);
         snapshot.forEach(doc => {
@@ -39,7 +39,7 @@ async function populateCategoryDropdown() {
     if (!categorySelect) return;
     
     categorySelect.innerHTML = '<option value="">-- Carregando Categorias... --</option>';
-    const categoriesRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'categorias');
+    const categoriesRef = collection(db, 'lojas', selectedStoreIdForCategories, 'categorias');
     
     try {
         const snapshot = await getDocs(categoriesRef);
@@ -71,7 +71,7 @@ categoryForm.addEventListener('submit', async (e) => {
     if (!categoryName) return;
 
     const categoryData = { name: categoryName };
-    const categoriesRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'categorias');
+    const categoriesRef = collection(db, 'lojas', selectedStoreIdForCategories, 'categorias');
 
     try {
         await addDoc(categoriesRef, categoryData);
@@ -84,16 +84,15 @@ categoryForm.addEventListener('submit', async (e) => {
 });
 
 // Exclui uma categoria
+
 window.deleteCategory = async (categoryId, categoryName) => {
     if (!selectedStoreIdForCategories) return;
     
-    // --- CORREÇÃO APLICADA AQUI ---
-    // Em vez de 'getCountFromServer', usamos 'getDocs' e pegamos o tamanho do resultado.
-    const productsRef = collection(db, 'mercerias', selectedStoreIdForCategories, 'produtos');
+    const productsRef = collection(db, 'lojas', selectedStoreIdForCategories, 'produtos');
     const q = query(productsRef, where("categoryId", "==", categoryId));
     
     const productsSnapshot = await getDocs(q);
-    const productCount = productsSnapshot.size; // Usamos .size para contar
+    const productCount = productsSnapshot.size;
 
     if (productCount > 0) {
         alert(`Não é possível excluir a categoria "${categoryName}" pois ela está sendo usada por ${productCount} item(ns).`);
@@ -102,7 +101,7 @@ window.deleteCategory = async (categoryId, categoryName) => {
 
     if (confirm(`Tem certeza que deseja excluir a categoria "${categoryName}"?`)) {
         try {
-            const categoryDocRef = doc(db, 'mercerias', selectedStoreIdForCategories, 'categorias', categoryId);
+            const categoryDocRef = doc(db, 'lojas', selectedStoreIdForCategories, 'categorias', categoryId);
             await deleteDoc(categoryDocRef);
             await loadCategories();
             await populateCategoryDropdown();

@@ -24,7 +24,7 @@ let storeWhatsappNumber = ''; // Para guardar o WhatsApp da loja
 
 // --- Funções do Modal ---
 window.openProductModal = (productId) => {
-    const product = productsData[productId]; // Pega os dados do produto clicado
+    const product = productsData[productId];
 
     if (product) {
         modalImg.src = product.imageUrl;
@@ -34,6 +34,20 @@ window.openProductModal = (productId) => {
 
         const message = encodeURIComponent(`Olá! Tenho interesse no produto: *${product.name}* - R$ ${product.price.toFixed(2)}`);
         modalWhatsappLink.href = `https://wa.me/${storeWhatsappNumber}?text=${message}`;
+
+        // Reseta o botão para o estado original
+        modalWhatsappLink.textContent = 'Tenho Interesse';
+        modalWhatsappLink.classList.remove('added');
+        
+        // Adiciona um listener para o clique
+        const handleInterestClick = () => {
+            modalWhatsappLink.textContent = 'Adicionado!';
+            modalWhatsappLink.classList.add('added');
+
+            // Remove o listener para não acumular múltiplos cliques
+            modalWhatsappLink.removeEventListener('click', handleInterestClick);
+        };
+        modalWhatsappLink.addEventListener('click', handleInterestClick);
 
         productModal.classList.remove('hidden');
     }
@@ -64,7 +78,7 @@ async function loadFlyer() {
     viewAllProductsLink.href = `/produtos.html?id=${storeId}`;
 
     try {
-        const storeDocRef = doc(db, 'mercerias', storeId);
+        const storeDocRef = doc(db, 'lojas', storeId);
         const storeSnapshot = await getDoc(storeDocRef);
         if (!storeSnapshot.exists()) {
             storeNameEl.textContent = "Mercearia não encontrada!";
@@ -73,6 +87,15 @@ async function loadFlyer() {
 
         const storeData = storeSnapshot.data();
         storeWhatsappNumber = storeData.whatsapp;
+
+        const pageTitle = document.querySelector('.showcase h2');
+        if (storeData.segmento === 'servicos') {
+            pageTitle.textContent = '✨ Nossos Serviços em Destaque';
+            document.title = `Serviços - ${storeData.nome}`;
+        } else {
+            pageTitle.textContent = '🔥 Promoções da Semana';
+            document.title = `Folheto Digital - ${storeData.nome}`;
+        }
 
         // --- Preenche as informações da loja ---
         document.title = `Folheto Digital - ${storeData.nome}`;
@@ -87,7 +110,7 @@ async function loadFlyer() {
         footerText.textContent = `© ${new Date().getFullYear()} ${storeData.nome}. Todos os direitos reservados.`;
 
         // --- Busca os produtos promocionais ---
-        const productsRef = collection(db, 'mercerias', storeId, 'produtos');
+        const productsRef = collection(db, 'lojas', storeId, 'produtos');
         const q = query(productsRef, where('isPromotional', '==', true), limit(12)); // Alterado para 12
         const productsSnapshot = await getDocs(q);
 

@@ -45,7 +45,7 @@ async function loadProducts() {
     if (!selectedStoreId) return;
     productTableBody.innerHTML = '';
     try {
-        const productsRef = collection(db, 'mercerias', selectedStoreId, 'produtos');
+        const productsRef = collection(db, 'lojas', selectedStoreId, 'produtos');
         const snapshot = await getDocs(productsRef);
         snapshot.forEach(doc => {
             const data = doc.data();
@@ -122,7 +122,7 @@ productForm.addEventListener('submit', async (e) => {
     };
 
     try {
-        const productsRef = collection(db, 'mercerias', selectedStoreId, 'produtos');
+        const productsRef = collection(db, 'lojas', selectedStoreId, 'produtos');
         if (editingProductId) {
             await updateDoc(doc(productsRef, editingProductId), productData);
         } else {
@@ -155,7 +155,7 @@ window.editProduct = (product) => {
 window.deleteProduct = async (productId) => {
     if (confirm('Tem certeza que deseja excluir este item?')) {
         try {
-            const productDocRef = doc(db, 'mercerias', selectedStoreId, 'produtos', productId);
+            const productDocRef = doc(db, 'lojas', selectedStoreId, 'produtos', productId);
             await deleteDoc(productDocRef);
             loadProducts();
         } catch (error) {

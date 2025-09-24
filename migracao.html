@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Script de Migração de Dados</title>
+</head>
+<body>
+    <h1>Ferramenta de Migração de Dados</h1>
+    <p>Abra o console do navegador (F12) para ver o progresso.</p>
+    <button id="startButton">Iniciar Migração</button>
+
+    <script type="module">
+        import { db } from './js/config.js';
+        import { getDocs, collection, doc, setDoc } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+
+        const startButton = document.getElementById('startButton');
+
+        startButton.addEventListener('click', async () => {
+            console.log("--- INICIANDO MIGRAÇÃO ---");
+            alert("A migração vai começar. Acompanhe o progresso no console (F12).");
+
+            try {
+                // 1. Referências para as coleções antiga e nova
+                const oldCollectionRef = collection(db, 'mercerias');
+                const newCollectionRef = collection(db, 'lojas');
+
+                // 2. Busca todos os documentos da coleção antiga 'mercerias'
+                const snapshot = await getDocs(oldCollectionRef);
+
+                if (snapshot.empty) {
+                    console.log("Nenhuma mercearia encontrada na coleção antiga. Nada a migrar.");
+                    alert("Nenhuma mercearia encontrada na coleção antiga.");
+                    return;
+                }
+
+                // 3. Loop para migrar cada documento
+                for (const oldDoc of snapshot.docs) {
+                    const oldData = oldDoc.data();
+                    const docId = oldDoc.id;
+                    console.log(`Migrando mercearia: ${oldData.nome} (ID: ${docId})`);
+
+                    // 4. Adiciona o novo campo 'segmento'
+                    const newData = {
+                        ...oldData,
+                        segmento: 'mercearia' // Adiciona o segmento padrão
+                    };
+
+                    // 5. Salva na nova coleção 'lojas' mantendo o mesmo ID
+                    const newDocRef = doc(newCollectionRef, docId);
+                    await setDoc(newDocRef, newData);
+
+                    // --- Migrando sub-coleções (produtos e categorias) ---
+                    console.log(" -> Migrando produtos...");
+                    const oldProductsRef = collection(db, 'mercerias', docId, 'produtos');
+                    const newProductsRef = collection(db, 'lojas', docId, 'produtos');
+                    const productsSnapshot = await getDocs(oldProductsRef);
+                    for (const productDoc of productsSnapshot.docs) {
+                        await setDoc(doc(newProductsRef, productDoc.id), productDoc.data());
+                    }
+                    console.log(` -> ${productsSnapshot.size} produtos migrados.`);
+
+
+                    console.log(" -> Migrando categorias...");
+                    const oldCategoriesRef = collection(db, 'mercerias', docId, 'categorias');
+                    const newCategoriesRef = collection(db, 'lojas', docId, 'categorias');
+                    const categoriesSnapshot = await getDocs(oldCategoriesRef);
+                     for (const categoryDoc of categoriesSnapshot.docs) {
+                        await setDoc(doc(newCategoriesRef, categoryDoc.id), categoryDoc.data());
+                    }
+                    console.log(` -> ${categoriesSnapshot.size} categorias migradas.`);
+
+                    console.log(`Mercearia ${oldData.nome} migrada com sucesso!`);
+                }
+
+                console.log("--- MIGRAÇÃO CONCLUÍDA ---");
+                alert("Migração concluída com sucesso! Verifique seu banco de dados.");
+
+            } catch (error) {
+                console.error("Ocorreu um erro na migração:", error);
+                alert("Ocorreu um erro na migração. Verifique o console.");
+            }
+        });
+    </script>
+</body>
+</html>
