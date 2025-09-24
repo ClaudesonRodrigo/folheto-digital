@@ -84,16 +84,15 @@ categoryForm.addEventListener('submit', async (e) => {
 });
 
 // Exclui uma categoria
+
 window.deleteCategory = async (categoryId, categoryName) => {
     if (!selectedStoreIdForCategories) return;
     
-    // --- CORREÇÃO APLICADA AQUI ---
-    // Em vez de 'getCountFromServer', usamos 'getDocs' e pegamos o tamanho do resultado.
     const productsRef = collection(db, 'lojas', selectedStoreIdForCategories, 'produtos');
     const q = query(productsRef, where("categoryId", "==", categoryId));
     
     const productsSnapshot = await getDocs(q);
-    const productCount = productsSnapshot.size; // Usamos .size para contar
+    const productCount = productsSnapshot.size;
 
     if (productCount > 0) {
         alert(`Não é possível excluir a categoria "${categoryName}" pois ela está sendo usada por ${productCount} item(ns).`);
@@ -102,7 +101,7 @@ window.deleteCategory = async (categoryId, categoryName) => {
 
     if (confirm(`Tem certeza que deseja excluir a categoria "${categoryName}"?`)) {
         try {
-            const categoryDocRef = doc(db, 'mercerias', selectedStoreIdForCategories, 'categorias', categoryId);
+            const categoryDocRef = doc(db, 'lojas', selectedStoreIdForCategories, 'categorias', categoryId);
             await deleteDoc(categoryDocRef);
             await loadCategories();
             await populateCategoryDropdown();

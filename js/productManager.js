@@ -155,7 +155,7 @@ window.editProduct = (product) => {
 window.deleteProduct = async (productId) => {
     if (confirm('Tem certeza que deseja excluir este item?')) {
         try {
-            const productDocRef = doc(db, 'mercerias', selectedStoreId, 'produtos', productId);
+            const productDocRef = doc(db, 'lojas', selectedStoreId, 'produtos', productId);
             await deleteDoc(productDocRef);
             loadProducts();
         } catch (error) {
