@@ -1,0 +1,37 @@
+/*
+ * Tema para o segmento de Serviços
+ */
+
+:root {
+    /* Paleta de cores profissional (tons de azul e cinza) */
+    --primary-color: #1565c0;   /* Azul corporativo */
+    --secondary-color: #ffb300; /* Âmbar para destaque */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    border-bottom-color: var(--primary-color);
+}
+
+.showcase h2 {
+    color: var(--primary-color);
+    text-transform: none;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+}
+
+.product .price {
+    background-color: var(--secondary-color);
+    color: #111;
+}
+
+.view-all-button {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.view-all-button:hover {
+    background-color: #0d47a1; /* Azul mais escuro */
+}
