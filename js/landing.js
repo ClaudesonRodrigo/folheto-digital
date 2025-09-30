@@ -8,7 +8,6 @@ async function loadLatestFlyers() {
     if (!latestFlyersContainer) return;
 
     try {
-        // --- MUDANÇA PRINCIPAL AQUI ---
         // Agora, a consulta busca apenas lojas com o segmento "mercearia"
         const q = query(storesRef, where("segmento", "==", "mercearia"), limit(3));
 
