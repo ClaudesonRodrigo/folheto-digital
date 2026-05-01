@@ -22,6 +22,22 @@ const modalWhatsappLink = document.getElementById('modalWhatsappLink');
 let productsData = {};
 let storeWhatsappNumber = '';
 
+function formatPrice(value) {
+    const numericValue = Number(value) || 0;
+    return numericValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function safeMapUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    try {
+        const parsed = new URL(url);
+        const allowedHost = parsed.hostname.includes('google.com') || parsed.hostname.includes('googleusercontent.com');
+        return allowedHost ? parsed.toString() : '';
+    } catch {
+        return '';
+    }
+}
+
 // --- Funções do Modal ---
 window.openProductModal = (productId) => {
     const product = productsData[productId];
@@ -30,9 +46,9 @@ window.openProductModal = (productId) => {
         modalImg.src = product.imageUrl;
         modalName.textContent = product.name;
         modalDesc.textContent = product.description;
-        modalPrice.textContent = `R$ ${product.price.toFixed(2)}`;
+        modalPrice.textContent = formatPrice(product.price);
 
-        const message = encodeURIComponent(`Olá! Tenho interesse no produto: *${product.name}* - R$ ${product.price.toFixed(2)}`);
+        const message = encodeURIComponent(`Olá! Tenho interesse no produto: *${product.name}* - ${formatPrice(product.price)}`);
         modalWhatsappLink.href = `https://wa.me/${storeWhatsappNumber}?text=${message}`;
 
         modalWhatsappLink.textContent = 'Tenho Interesse';
@@ -114,7 +130,16 @@ async function loadFlyer() {
             storeLogoEl.src = storeData.logoUrl;
             storeLogoEl.style.display = 'block';
         }
-        mapContainer.innerHTML = `<iframe src="${storeData.localizacao}" allowfullscreen="" loading="lazy"></iframe>`;
+        const mapUrl = safeMapUrl(storeData.localizacao);
+        if (mapUrl) {
+            const iframe = document.createElement('iframe');
+            iframe.src = mapUrl;
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.loading = 'lazy';
+            mapContainer.replaceChildren(iframe);
+        } else {
+            mapContainer.textContent = 'Localização indisponível no momento.';
+        }
         const generalMessage = encodeURIComponent(`Olá! Gostaria de saber mais sobre as promoções.`);
         whatsappLink.href = `https://wa.me/${storeWhatsappNumber}?text=${generalMessage}`;
         footerText.textContent = `© ${new Date().getFullYear()} ${storeData.nome}. Todos os direitos reservados.`;
@@ -125,6 +150,12 @@ async function loadFlyer() {
         const productsSnapshot = await getDocs(q);
 
         productList.innerHTML = ''; // Limpa os skeletons
+
+        if (productsSnapshot.empty) {
+            productList.textContent = 'Nenhum item promocional encontrado para este catálogo.';
+            return;
+        }
+
         productsSnapshot.forEach(doc => {
             const productId = doc.id;
             const data = doc.data();
@@ -132,17 +163,28 @@ async function loadFlyer() {
 
             const productDiv = document.createElement('div');
             productDiv.classList.add('product');
-            productDiv.setAttribute('onclick', `openProductModal('${productId}')`);
+            productDiv.addEventListener('click', () => openProductModal(productId));
 
-            productDiv.innerHTML = `
-                <img src="${data.imageUrl}" alt="${data.name}">
-                <div class="product-info">
-                    <h3>${data.name}</h3>
-                    <div class="product-price-container">
-                        <span class="price">R$ ${data.price.toFixed(2)}</span>
-                    </div>
-                </div>
-            `;
+            const productImg = document.createElement('img');
+            productImg.src = data.imageUrl;
+            productImg.alt = data.name;
+
+            const infoWrapper = document.createElement('div');
+            infoWrapper.classList.add('product-info');
+
+            const title = document.createElement('h3');
+            title.textContent = data.name;
+
+            const priceContainer = document.createElement('div');
+            priceContainer.classList.add('product-price-container');
+
+            const price = document.createElement('span');
+            price.classList.add('price');
+            price.textContent = formatPrice(data.price);
+
+            priceContainer.appendChild(price);
+            infoWrapper.append(title, priceContainer);
+            productDiv.append(productImg, infoWrapper);
             productList.appendChild(productDiv);
         });
 
