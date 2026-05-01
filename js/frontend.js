@@ -27,12 +27,22 @@ function formatPrice(value) {
     return numericValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+function isAllowedMapHost(hostname) {
+    const normalizedHost = hostname.toLowerCase();
+    const allowedDomains = ['google.com', 'googleusercontent.com'];
+
+    return allowedDomains.some((domain) => normalizedHost === domain || normalizedHost.endsWith(`.${domain}`));
+}
+
 function safeMapUrl(url) {
     if (!url || typeof url !== 'string') return '';
+
     try {
         const parsed = new URL(url);
-        const allowedHost = parsed.hostname.includes('google.com') || parsed.hostname.includes('googleusercontent.com');
-        return allowedHost ? parsed.toString() : '';
+        const allowedProtocol = parsed.protocol === 'https:';
+        const allowedHost = isAllowedMapHost(parsed.hostname);
+
+        return allowedProtocol && allowedHost ? parsed.toString() : '';
     } catch {
         return '';
     }
