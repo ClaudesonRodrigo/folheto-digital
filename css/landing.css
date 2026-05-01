@@ -17,24 +17,22 @@ body {
     padding: 0 20px;
 }
 
-/* --- Seção Hero Modificada --- */
 .hero {
     color: white;
     text-align: center;
-    position: relative; /* Essencial para o posicionamento do slider e do texto */
-    height: 80vh; /* Altura do cabeçalho */
+    position: relative;
+    height: 80vh;
     min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden; /* Garante que nada saia dos limites */
+    overflow: hidden;
 }
 
-/* Camada de sobreposição para o texto */
 .hero-text-overlay {
-    position: relative; /* Fica acima do slider */
+    position: relative;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo escuro para legibilidade */
+    background-color: rgba(0, 0, 0, 0.6);
     padding: 4rem 0;
     width: 100%;
     height: 100%;
@@ -52,8 +50,15 @@ body {
 
 .hero .subtitle {
     font-size: 1.2rem;
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto 2rem;
+}
+
+.hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
 }
 
 .cta-button {
@@ -82,22 +87,55 @@ body {
     padding: 1.2rem 2.5rem;
 }
 
-
-/* --- NOVAS SEÇÕES DE CONTEÚDO --- */
-.problem-solution, .customer-experience {
+.market-proof,
+.problem-solution,
+.customer-experience,
+.whatsapp-reach,
+.examples,
+.faq,
+.contact {
     padding: 5rem 0;
 }
 
-.customer-experience {
+.customer-experience,
+.faq {
     background-color: var(--light-color);
 }
-/* --- NOVA SEÇÃO DE ALCANCE --- */
-.whatsapp-reach {
-    padding: 5rem 0;
+
+.market-proof h2,
+.faq h2 {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    margin-bottom: 2.5rem;
 }
+
+.proof-grid,
+.faq-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.proof-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 1.6rem;
+    box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+.proof-card i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+}
+
+.proof-card h3 {
+    margin-bottom: 0.5rem;
+}
+
 .content-split {
     display: grid;
-    grid-template-columns: 1fr; /* Coluna única em mobile */
+    grid-template-columns: 1fr;
     gap: 3rem;
     align-items: center;
 }
@@ -139,21 +177,7 @@ body {
     box-shadow: 0 10px 25px var(--shadow-color);
 }
 
-
-/* --- Layout para telas maiores --- */
-@media(min-width: 768px) {
-    .content-split {
-        grid-template-columns: 1fr 1fr; /* Duas colunas em telas maiores */
-    }
-    .content-split.reverse .text-content {
-        order: 2; /* Inverte a ordem das colunas */
-    }
-}
-
-
-/* --- Seção de Exemplos (já existente) --- */
 .examples {
-    padding: 5rem 0;
     text-align: center;
 }
 
@@ -200,7 +224,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .flyer-card-image img {
@@ -241,9 +265,24 @@ body {
     font-weight: 700;
 }
 
-/* --- Contato e Rodapé --- */
+.faq details {
+    background: white;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.faq summary {
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.faq details p {
+    margin: 0.8rem 0 0;
+    color: #555;
+}
+
 .contact {
-    padding: 5rem 0;
     text-align: center;
     background: var(--dark-color);
     color: white;
@@ -260,14 +299,13 @@ footer {
     padding: 1.5rem;
 }
 
-/* --- ESTILOS DO STORYBOOK DENTRO DO HERO --- */
 .hero .storybook-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* Fica abaixo do texto */
+    z-index: 1;
 }
 
 .hero .storybook-slides {
@@ -293,10 +331,9 @@ footer {
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Garante que a imagem cubra todo o espaço */
+    object-fit: cover;
 }
 
-/* Removido o caption, pois o texto agora está no overlay */
 .slide-caption {
     display: none;
 }
@@ -308,7 +345,7 @@ footer {
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
-    z-index: 3; /* Garante que a navegação fique acima de tudo */
+    z-index: 3;
 }
 
 .nav-dot {
@@ -323,4 +360,22 @@ footer {
 
 .nav-dot.active {
     background: white;
+}
+
+@media (min-width: 768px) {
+    .content-split {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .content-split.reverse .text-content {
+        order: 2;
+    }
+
+    .proof-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .faq-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
